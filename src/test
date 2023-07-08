@@ -1,0 +1,32 @@
+//Configure WDT.
+NRF_WDT->CONFIG         = 0x01;     // Configure WDT to run when CPU is asleep
+NRF_WDT->CRV            = 5898241;  // Timeout set to 120 seconds, timeout[s] = (CRV-1)/32768
+NRF_WDT->RREN           = 0x01;     // Enable the RR[0] reload register
+NRF_WDT->TASKS_START    = 1;        // Start WDT 
+
+// Reload the WDTs RR[0] reload register
+NRF_WDT->RR[0] = WDT_RR_RR_Reload; 
+
+#include <Arduino.h>
+
+#define READ_LED 2 //D2 for LED lighting up when reading present 
+#define MQ3_PIN A4 //Analog pin A4 for analog input of MQ3 pin
+
+unsigned long mq3_voltage_raw;
+void setup(){
+  pinMode(READ_LED, OUTPUT);
+  pinMode(MQ3_PIN, INPUT);
+  Serial.begin(9600);
+}
+
+void loop(){
+  mq3_voltage_raw = analogRead(MQ3_PIN);
+  if (mq3_voltage_raw > 5){
+    digitalWrite(READ_LED, HIGH);
+    delay(500);
+    digitalWrite(READ_LED, LOW);
+    delay(500);
+    Serial.println(mq3_voltage_raw);
+  }
+  delay(10);
+} 

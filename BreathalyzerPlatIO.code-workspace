@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"nrf-connect.topdir": "/Users/dcunhrya/zephyrBreathalyzer",
+		"nrf-connect.toolchain.path": "PATH"
+	}
+}
